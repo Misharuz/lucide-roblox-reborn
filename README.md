@@ -3,4 +3,5 @@
 
 # [![Lucide Logo][img/lucide-logo]](https://lucide.dev) Lucide Icons Library for Roblox (Reborn)
 
-[![License][badges/license]][license]
+Library to Use the Lucide Icon Set (<https://lucide.dev>) in Roblox
+This is reborn of old lucide-roblox by latte-soft
