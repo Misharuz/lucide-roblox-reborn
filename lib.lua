@@ -1363,7 +1363,3 @@ function Lucide.Icon(iconName, iconSize, overrides)
 end
 
 return Lucide
-
-
-
-return Lucide
