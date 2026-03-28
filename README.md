@@ -28,3 +28,5 @@ Returns icon data as ```{IconName = "name", Id = 12345, Url = "rbxthumb://type=A
 2. ```Lucide.Icon("name", size, overrides)```
 
 Returns instance of ImageLabel, that is fully ready to use in your UI
+
+## If you know any issue, please create issue, this will help me so much
