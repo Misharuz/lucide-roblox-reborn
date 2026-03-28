@@ -1306,7 +1306,7 @@ local icons = {
 type Icon = {
     IconName, -- "icon-name"
     Id, -- 123456789
-    Url, -- "rbxthumb://type=Asset&id=123456789&w=420&h=420"
+    Url -- "rbxthumb://type=Asset&id=123456789&w=420&h=420"
 }
 
 local Lucide = {}
