@@ -1303,12 +1303,6 @@ local icons = {
     ["shrimp"] = "rbxthumb://type=Asset&id=108442495820916&w=420&h=420",
 }
 
-type Icon = {
-    IconName, -- "icon-name"
-    Id, -- 123456789
-    Url -- "rbxthumb://type=Asset&id=123456789&w=420&h=420"
-}
-
 local Lucide = {}
 
 local function ApplyToInstance(object, properties)
@@ -1330,7 +1324,7 @@ end
 local function Lucide.GetIcon(iconName)
     return {
         if icons[iconName] then
-            local Icon: Icon = {
+            {
                 IconName = iconName,
                 Id = string.match(icons[iconName], "id=(%d+)"),
                 Url = icons[iconName]
@@ -1346,7 +1340,7 @@ local function Lucide.Icon(iconName, iconSize, overrides)
     local ImageSize = if iconSize == nil then 256 else iconSize
     local Overrides = if overrides == nil then {} else overrides
 
-    local Icon = Lucide.GetIcon(iconName, ImageSize)
+    local Icon = Lucide.GetIcon(iconName)
     
     local ImageLabel = ApplyToInstance(Instance.new("ImageLabel"), {
         Name = Icon.IconName,
