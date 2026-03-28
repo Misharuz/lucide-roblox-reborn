@@ -1300,14 +1300,14 @@ local icons = {
     ["shovel"] = "rbxthumb://type=Asset&id=75465050056425&w=420&h=420",
     ["shower-head"] = "rbxthumb://type=Asset&id=100664580417714&w=420&h=420",
     ["shredder"] = "rbxthumb://type=Asset&id=135927896454167&w=420&h=420",
-    ["shrimp"] = "rbxthumb://type=Asset&id=108442495820916&w=420&h=420",
+    ["shrimp"] = "rbxthumb://type=Asset&id=108442495820916&w=420&h=420"
 }
 
 local Lucide = {}
 
 local function ApplyToInstance(object, properties)
     if properties then
-        for Property, Value in properties do
+        for Property, Value in pairs(properties) do
             if Property ~= "Parent" then
                 object[Property] = Value
             end
@@ -1321,46 +1321,48 @@ local function ApplyToInstance(object, properties)
     return object
 end
 
-local function Lucide.GetIcon(iconName)
-    return {
-        if icons[iconName] then
-            {
-                IconName = iconName,
-                Id = string.match(icons[iconName], "id=(%d+)"),
-                Url = icons[iconName]
-            }
-        else
-            print("Error, " .. iconName .. "not found")
-        end
-    }
+function Lucide.GetIcon(iconName)
+    if icons[iconName] then
+        return {
+            IconName = iconName,
+            Id = string.match(icons[iconName], "id=(%d+)"),
+            Url = icons[iconName]
+        }
+    else
+        warn("Lucide Error: Icon '" .. tostring(iconName) .. "' not found.")
+        return nil
+    end
 end
 
+function Lucide.Icon(iconName, iconSize, overrides)
+    local imageSize = iconSize or 256
+    local propertyOverrides = overrides or {}
 
-local function Lucide.Icon(iconName, iconSize, overrides)
-    local ImageSize = if iconSize == nil then 256 else iconSize
-    local Overrides = if overrides == nil then {} else overrides
-
-    local Icon = Lucide.GetIcon(iconName)
+    local iconData = Lucide.GetIcon(iconName)
     
-    local ImageLabel = ApplyToInstance(Instance.new("ImageLabel"), {
-        Name = Icon.IconName,
-
-        Size = UDim2.fromOffset(ImageSize, ImageSize),
-
+    -- Fallback if icon doesn't exist to prevent the script from crashing
+    if not iconData then return nil end
+    
+    local imageLabel = Instance.new("ImageLabel")
+    
+    ApplyToInstance(imageLabel, {
+        Name = iconData.IconName,
+        Size = UDim2.fromOffset(imageSize, imageSize),
         BackgroundColor3 = Color3.new(0, 0, 0),
         BackgroundTransparency = 1,
         BorderSizePixel = 0,
-
-        Image = Icon.Url,
-        ImageColor3 = Color3.new(1, 1, 1), -- #FFFFFF
+        Image = iconData.Url,
+        ImageColor3 = Color3.new(1, 1, 1),
         ScaleType = Enum.ScaleType.Fit
     })
-            
-    ApplyToInstance(ImageLabel, PropertyOverrides)
-
-    return ImageLabel
     
+    -- Apply the user's custom overrides last
+    ApplyToInstance(imageLabel, propertyOverrides)
+
+    return imageLabel
 end
+
+return Lucide
 
 
 
