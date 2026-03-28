@@ -1303,16 +1303,71 @@ local icons = {
     ["shrimp"] = "rbxthumb://type=Asset&id=108442495820916&w=420&h=420",
 }
 
-local library = {}
+type Icon = {
+    IconName, -- "icon-name"
+    Id, -- 123456789
+    Url, -- "rbxthumb://type=Asset&id=123456789&w=420&h=420"
+}
 
-function library.GetIcon(iconName)
+local Lucide = {}
+
+local function ApplyToInstance(object, properties)
+    if properties then
+        for Property, Value in properties do
+            if Property ~= "Parent" then
+                object[Property] = Value
+            end
+        end
+
+        if properties.Parent then
+            object.Parent = properties.Parent
+        end
+    end
+
+    return object
+end
+
+local function Lucide.GetIcon(iconName)
     return {
         if icons[iconName] then
-            icons[iconName]
+            local Icon: Icon = {
+                IconName = iconName,
+                Id = string.match(icons[iconName], "id=(%d+)"),
+                Url = icons[iconName]
+            }
         else
             print("Error, " .. iconName .. "not found")
         end
     }
 end
 
-return library
+
+local function Lucide.Icon(iconName, iconSize, overrides)
+    local ImageSize = if iconSize == nil then 256 else iconSize
+    local Overrides = if overrides == nil then {} else overrides
+
+    local Icon = Lucide.GetIcon(iconName, ImageSize)
+    
+    local ImageLabel = ApplyToInstance(Instance.new("ImageLabel"), {
+        Name = Icon.IconName,
+
+        Size = UDim2.fromOffset(ImageSize, ImageSize),
+
+        BackgroundColor3 = Color3.new(0, 0, 0),
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
+
+        Image = Icon.Url,
+        ImageColor3 = Color3.new(1, 1, 1), -- #FFFFFF
+        ScaleType = Enum.ScaleType.Fit
+    })
+            
+    ApplyToInstance(ImageLabel, PropertyOverrides)
+
+    return ImageLabel
+    
+end
+
+
+
+return Lucide
