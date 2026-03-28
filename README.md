@@ -29,4 +29,4 @@ Returns icon data as ```{IconName = "name", Id = 12345, Url = "rbxthumb://type=A
 
 Returns instance of ImageLabel, that is fully ready to use in your UI
 
-## If you know any issue, please create [https://github.com/Misharuz/lucide-roblox-reborn/issues/new](issue), this will help me so much
+## If you know any issue, please create [issue]([issue](https://github.com/Misharuz/lucide-roblox-reborn/issues/new)), this will help me so much
